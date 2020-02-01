@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:c_lecture/design_course_app_theme.dart';
-import 'package:c_lecture/model/lecture_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 
@@ -31,7 +30,7 @@ class _CourseInfoScreenState extends State<CourseInfoScreen>
     setData();
     super.initState();
   }
-  LectureData lectureData;
+  //LectureData lectureData;
   String mdFileText;
   Future<void> setData() async {
     animationController.forward();
@@ -48,7 +47,7 @@ class _CourseInfoScreenState extends State<CourseInfoScreen>
       opacity3 = 1.0;
     });
 
-    lectureData = LectureData();
+    //lectureData = LectureData();
     mdFileText = '''##프로그래밍 언어?
 사람들은 말을 통해 서로 대화를 하고 서로의 생각을 주고 받습니다. 그렇다면 사람과 컴퓨터는 어떻게 대화를 할까요? 어떤 사람들들은 마우스와 키보드를 통해서 인터넷을 켜고, 게임을 하는 반면 또 어떤 사람들은, 이상한 명령어들을 이용해서 그러한 인터넷이나 게임을 만들기도 합니다. 그 이상한 명령어를 ​프로그래밍 언어라고 부릅니다. 사람들간에는 한국어, 영어, 프랑스어 등이 있듯이, 프로그래밍 언어에도 여러 종류가 있습니다. C, C++, JAVA, PYTHON, 등으로 불리고 있습니다. ﻿우리는 이제부터 앞서말한 C라고 하는 프로그래밍 언어로 컴퓨터와 대화를 시도해볼겁니다!''';
 
@@ -65,7 +64,7 @@ class _CourseInfoScreenState extends State<CourseInfoScreen>
     ''';
 
     Map<String, dynamic> json = jsonDecode(jsonString);
-    lectureData.fromJson(json);
+    //lectureData.fromJson(json);
   }
 
   @override
