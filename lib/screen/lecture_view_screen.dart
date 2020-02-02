@@ -4,19 +4,19 @@ import 'package:c_lecture/services/lecture_serivce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 
-class LectureViewPage extends StatefulWidget {
+class LectureViewScreen extends StatefulWidget {
   Lecture _lecture;
 
-  LectureViewPage(Lecture lecture)
+  LectureViewScreen(Lecture lecture)
   {
     _lecture = lecture;
   }
 
   @override
-  _LectureViewPageState createState() => _LectureViewPageState();
+  _LectureViewScreenState createState() => _LectureViewScreenState();
 }
 
-class _LectureViewPageState extends State<LectureViewPage> {
+class _LectureViewScreenState extends State<LectureViewScreen> {
   LectureService _lectureService = LectureService();
   String _markdownData;
 

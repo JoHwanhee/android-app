@@ -18,7 +18,7 @@ void main() {
         var lectures = await lectureService.getLectures();
         print(lectures.data[0].title);
         print(lectures.data[0].path);
-        expect(lectures.data == null, false);
+        expect(lectures.data[0].title, "1. 프로그래밍이란 무엇인가.");
     });
 }
 

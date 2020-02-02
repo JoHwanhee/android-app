@@ -1,16 +1,12 @@
-import 'dart:developer';
-
 import 'package:c_lecture/design_course_app_theme.dart';
 import 'package:c_lecture/model/lectures.dart';
-import 'package:c_lecture/screen/lecture_view_page.dart';
-import 'package:c_lecture/services/lecture_serivce.dart';
+import 'package:c_lecture/screen/lecture_view_screen.dart';
 import 'package:c_lecture/util/util.dart';
 import 'package:flutter/material.dart';
 
 class PopularCourseListView extends StatefulWidget {
-  const PopularCourseListView({Key key, this.callBack, this.lectures}) : super(key: key);
+  const PopularCourseListView({Key key, this.lectures}) : super(key: key);
 
-  final Function callBack;
   final Lectures lectures;
 
   @override
@@ -30,7 +26,6 @@ class _PopularCourseListViewState extends State<PopularCourseListView>
 
     setState(() {
       _lectures = widget.lectures;
-      print(_lectures.data[0].title);
     });
   }
 
@@ -39,11 +34,11 @@ class _PopularCourseListViewState extends State<PopularCourseListView>
     return true;
   }
 
-  void moveTo() {
+  void moveTo(Lecture lecture) {
     Navigator.push<dynamic>(
       context,
       MaterialPageRoute<dynamic>(
-        builder: (BuildContext context) => LectureViewPage(_lectures.data[0]),
+        builder: (BuildContext context) => LectureViewScreen(lecture),
       ),
     );
   }
@@ -51,51 +46,37 @@ class _PopularCourseListViewState extends State<PopularCourseListView>
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 8),
-      child: FutureBuilder<bool>(
-        future: getData(),
-        builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-          if (!snapshot.hasData) {
-            return const SizedBox();
-          } else {
-            return GridView(
-              padding: const EdgeInsets.all(8),
-              physics: const BouncingScrollPhysics(),
-              scrollDirection: Axis.vertical,
-              children: List<Widget>.generate(
-                _lectures.data.length,
-                (int index) {
-                  final int count = _lectures.data.length;
-                  final Animation<double> animation =
-                      Tween<double>(begin: 0.0, end: 1.0).animate(
-                    CurvedAnimation(
-                      parent: animationController,
-                      curve: Interval((1 / count) * index, 1.0,
-                          curve: Curves.fastOutSlowIn),
-                    ),
-                  );
-                  animationController.forward();
-                  return CategoryView(
-                    callback: () {
-                      moveTo();
-                    },
-                    lecture: _lectures.data[index],
-                    animation: animation,
-                    animationController: animationController,
-                  );
-                },
-              ),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisSpacing: 32.0,
-                crossAxisSpacing: 32.0,
-                childAspectRatio: 0.8,
-              ),
-            );
-          }
-        },
-      ),
-    );
+        padding: const EdgeInsets.only(top: 8),
+        child: GridView(
+          padding: const EdgeInsets.all(8),
+          physics: const BouncingScrollPhysics(),
+          scrollDirection: Axis.vertical,
+          children: List<Widget>.generate(
+            _lectures.data.length,
+            (int index) {
+              final int count = _lectures.data.length;
+              final Animation<double> animation =
+                  Tween<double>(begin: 0.0, end: 1.0).animate(
+                CurvedAnimation(
+                  parent: animationController,
+                  curve: Interval((1 / count) * index, 1.0,
+                      curve: Curves.fastOutSlowIn),
+                ),
+              );
+              animationController.forward();
+              return Center(
+                child: Text(_lectures.data[index].title),
+
+              );
+            },
+          ),
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            mainAxisSpacing: 32.0,
+            crossAxisSpacing: 32.0,
+            childAspectRatio: 0.8,
+          ),
+        ));
   }
 }
 
@@ -129,6 +110,7 @@ class CategoryView extends StatelessWidget {
                 callback();
               },
               child: SizedBox(
+
                 height: 280,
                 child: Stack(
                   alignment: AlignmentDirectional.bottomCenter,
@@ -166,60 +148,7 @@ class CategoryView extends StatelessWidget {
                                               ),
                                             ),
                                           ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                top: 8,
-                                                left: 16,
-                                                right: 16,
-                                                bottom: 8),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              children: <Widget>[
-                                                Text(
-                                                  ' lesson',
-                                                  textAlign: TextAlign.left,
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.w200,
-                                                    fontSize: 12,
-                                                    letterSpacing: 0.27,
-                                                    color: DesignCourseAppTheme
-                                                        .grey,
-                                                  ),
-                                                ),
-                                                Container(
-                                                  child: Row(
-                                                    children: <Widget>[
-                                                      Text(
-                                                        ' lating ',
-                                                        textAlign:
-                                                            TextAlign.left,
-                                                        style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.w200,
-                                                          fontSize: 18,
-                                                          letterSpacing: 0.27,
-                                                          color:
-                                                              DesignCourseAppTheme
-                                                                  .grey,
-                                                        ),
-                                                      ),
-                                                      Icon(
-                                                        Icons.star,
-                                                        color:
-                                                            DesignCourseAppTheme
-                                                                .nearlyBlue,
-                                                        size: 20,
-                                                      ),
-                                                    ],
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                          ),
+
                                         ],
                                       ),
                                     ),
@@ -256,7 +185,6 @@ class CategoryView extends StatelessWidget {
                           child: ClipRRect(
                             borderRadius:
                                 const BorderRadius.all(Radius.circular(16.0)),
-
                           ),
                         ),
                       ),

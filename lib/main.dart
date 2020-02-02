@@ -1,7 +1,19 @@
-import 'package:c_lecture/screen/home_design_course.dart';
-import 'package:flutter/material.dart';
+import 'package:c_lecture/pages/list_page.dart';
+import 'package:c_lecture/providers/app_provider.dart';
+import 'package:c_lecture/providers/lecture_provier.dart';
 
-void main() => runApp(MyApp());
+import 'package:c_lecture/screen/splash_screen.dart';
+import 'package:c_lecture/screen/tab_screen.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+void main() => runApp(
+  MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => LectureProvider())
+      ],
+      child: MyApp()
+  ),);
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -10,18 +22,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: DesignCourseHomeScreen(),
+      home: SplashScreen(),
+      routes: <String, WidgetBuilder>{
+        '/TabScreen': (BuildContext context) => new ListPage(title: 'C Language',),
+      },
     );
   }
 }
