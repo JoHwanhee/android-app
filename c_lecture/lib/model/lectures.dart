@@ -27,18 +27,26 @@ class Lecture {
     String path;
     String imagePath;
     String level;
+    double indicatorValue;
 
-    Lecture({this.title, this.path});
+    Lecture({this.title, this.path, this.imagePath, this.level, this.indicatorValue});
 
     Lecture.fromJson(Map<String, dynamic> json) {
         title = json['title'];
         path = json['path'];
+        imagePath = json['imagePath'];
+        level = json['level'];
+        indicatorValue = json['indicatorValue'];
     }
 
     Map<String, dynamic> toJson() {
         final Map<String, dynamic> data = new Map<String, dynamic>();
         data['title'] = this.title;
         data['path'] = this.path;
+        data['imagePath'] = this.imagePath;
+        data['level'] = this.level;
+        data['indicatorValue'] = this.indicatorValue;
+
         return data;
     }
 }

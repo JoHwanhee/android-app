@@ -1,3 +1,4 @@
+import 'package:c_lecture/const.dart';
 import 'package:c_lecture/pages/list_page.dart';
 import 'package:flutter/material.dart';
 
@@ -40,7 +41,7 @@ class DetailPage extends StatelessWidget {
                         pinned: true,
                         flexibleSpace: FlexibleSpaceBar(
                             title: Text(lesson.title),
-                            background: Image.network('https://mblogthumb-phinf.pstatic.net/MjAxODA1MDVfMTQg/MDAxNTI1NTMyMDE0OTAy.Y2Kks89wfLEb0RE5asO0NoH6an6cJH0OT92jeeZK6pgg.CQYa8UNPGHk2hW5BAy2V8toWQ2lKCEs7TzHZrikX8gIg.JPEG.comeinto_/output_2405482813.jpg?type=w800',
+                            background: Image.network(Const.LectureServerUrl + Const.TitleImagePath,
                                 fit: BoxFit.cover
                             ),
 
