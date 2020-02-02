@@ -1,6 +1,7 @@
 import 'package:c_lecture/design_course_app_theme.dart';
-import 'package:c_lecture/screen/course_info_screen.dart';
+import 'package:c_lecture/model/lectures.dart';
 import 'package:c_lecture/screen/lecture_view_page.dart';
+import 'package:c_lecture/services/lecture_serivce.dart';
 import 'package:c_lecture/util/util.dart';
 import 'package:c_lecture/view/category_list_view.dart';
 import 'package:c_lecture/view/popular_course_list_view.dart';
@@ -14,6 +15,21 @@ class DesignCourseHomeScreen extends StatefulWidget {
 
 class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
   CategoryType categoryType = CategoryType.ui;
+
+  LectureService _lectureService = LectureService();
+  Lectures _lectures = Lectures();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    _lectureService.getLectures().then((res) {
+      setState(() {
+        _lectures = res;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,8 +49,8 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
                   height: MediaQuery.of(context).size.height,
                   child: Column(
                     children: <Widget>[
-                      getSearchBarUI(),
-                      getCategoryUI(),
+                      /*getSearchBarUI(),
+                      getCategoryUI(),*/
                       Flexible(
                         child: getPopularCourseUI(),
                       ),
@@ -100,6 +116,15 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
     );
   }
 
+  void moveTo() {
+    Navigator.push<dynamic>(
+      context,
+      MaterialPageRoute<dynamic>(
+        builder: (BuildContext context) => LectureViewPage(_lectures.data[0]),
+      ),
+    );
+  }
+
   Widget getPopularCourseUI() {
     return Padding(
       padding: const EdgeInsets.only(top: 8.0, left: 18, right: 16),
@@ -108,7 +133,7 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            'Popular Course',
+            'C Language',
             textAlign: TextAlign.left,
             style: TextStyle(
               fontWeight: FontWeight.w600,
@@ -119,6 +144,7 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
           ),
           Flexible(
             child: PopularCourseListView(
+              lectures: _lectures,
               callBack: () {
                 moveTo();
               },
@@ -129,14 +155,7 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
     );
   }
 
-  void moveTo() {
-    Navigator.push<dynamic>(
-      context,
-      MaterialPageRoute<dynamic>(
-        builder: (BuildContext context) => LectureViewPage(),
-      ),
-    );
-  }
+
 
   Widget getButtonUI(CategoryType categoryTypeData, bool isSelected) {
     String txt = '';
@@ -272,7 +291,7 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  'Choose your',
+                  '둥둥\'s',
                   textAlign: TextAlign.left,
                   style: TextStyle(
                     fontWeight: FontWeight.w400,
@@ -282,7 +301,7 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
                   ),
                 ),
                 Text(
-                  'Design Course',
+                  '프로그래밍 강의 플랫폼',
                   textAlign: TextAlign.left,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
