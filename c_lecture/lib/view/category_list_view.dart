@@ -4,9 +4,8 @@ import 'package:c_lecture/util/util.dart';
 import 'package:flutter/material.dart';
 
 class CategoryListView extends StatefulWidget {
-  const CategoryListView({Key key, this.callBack}) : super(key: key);
+  const CategoryListView({Key key}) : super(key: key);
 
-  final Function callBack;
   @override
   _CategoryListViewState createState() => _CategoryListViewState();
 }
@@ -61,9 +60,6 @@ class _CategoryListViewState extends State<CategoryListView>
                     category: Category.categoryList[index],
                     animation: animation,
                     animationController: animationController,
-                    callback: () {
-                      widget.callBack();
-                    },
                   );
                 },
               );
@@ -80,11 +76,9 @@ class CategoryView extends StatelessWidget {
       {Key key,
       this.category,
       this.animationController,
-      this.animation,
-      this.callback})
+      this.animation})
       : super(key: key);
 
-  final VoidCallback callback;
   final Category category;
   final AnimationController animationController;
   final Animation<dynamic> animation;
@@ -101,9 +95,7 @@ class CategoryView extends StatelessWidget {
                 100 * (1.0 - animation.value), 0.0, 0.0),
             child: InkWell(
               splashColor: Colors.transparent,
-              onTap: () {
-                callback();
-              },
+              onTap: () { },
               child: SizedBox(
                 width: 280,
                 child: Stack(

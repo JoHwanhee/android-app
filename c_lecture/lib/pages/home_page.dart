@@ -1,35 +1,28 @@
 import 'package:c_lecture/design_course_app_theme.dart';
 import 'package:c_lecture/model/lectures.dart';
+import 'package:c_lecture/providers/lecture_provier.dart';
 import 'package:c_lecture/services/lecture_serivce.dart';
+import 'package:c_lecture/util/util.dart';
+import 'package:c_lecture/view/popular_course_list_view.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:provider/provider.dart';
 
-class LectureViewPage extends StatefulWidget {
-  Lecture _lecture;
-
-  LectureViewPage(Lecture lecture)
-  {
-    _lecture = lecture;
-  }
-
+class HomePage extends StatefulWidget {
   @override
-  _LectureViewPageState createState() => _LectureViewPageState();
+  _HomePageState createState() => _HomePageState();
 }
 
-class _LectureViewPageState extends State<LectureViewPage> {
-  LectureService _lectureService = LectureService();
-  String _markdownData;
-
+class _HomePageState extends State<HomePage> {
+  Lectures _lectures;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
 
-
-    _lectureService.getContents(widget._lecture).then((res) {
+    LectureService().getLectures().then((res) {
       setState(() {
-        _markdownData = res;
+        _lectures = res;
       });
     });
   }
@@ -37,19 +30,16 @@ class _LectureViewPageState extends State<LectureViewPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: DesignCourseAppTheme.nearlyWhite,
-        iconTheme: IconThemeData.fallback(),
-        title: Text('a'),
-        
-      ),
-      body: _buildBody(),
+      appBar: AppBar(title: Text('C Language'),),
+
+      backgroundColor: Colors.transparent,
+      body:getPopularCourseUI(),
     );
   }
 
   Widget getAppBarUI() {
     return Padding(
-      padding: const EdgeInsets.only(top: 8.0, left: 18, right: 18),
+      padding: const EdgeInsets.only(top: 18.0, left: 18, right: 18),
       child: Row(
         children: <Widget>[
           Expanded(
@@ -80,35 +70,37 @@ class _LectureViewPageState extends State<LectureViewPage> {
               ],
             ),
           ),
-          Container(
-            width: 60,
-            height: 60,
-            child: Image.asset('assets/design_course/userImage.png'),
+
+        ],
+      ),
+    );
+  }
+
+  Widget getPopularCourseUI() {
+    return Padding(
+      padding: const EdgeInsets.only(top: 8.0, left: 18, right: 16),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+
+          Flexible(
+            child: _lectures == null
+                ? Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : PopularCourseListView(lectures: _lectures),
           )
         ],
       ),
     );
   }
 
-  Widget _buildBody() {
-    final controller = ScrollController();
 
-    if(_markdownData == null ){
+}
 
-      return Center(
-          child: Container(
-              child: CircularProgressIndicator(),
-          ),
-      );
-    }
-
-    return SafeArea(
-      child: Markdown(
-        controller: controller,
-        selectable: true,
-        data: _markdownData,
-        imageDirectory: 'https://raw.githubusercontent.com',
-      ),
-    );
-  }
+enum CategoryType {
+  ui,
+  coding,
+  basic,
 }

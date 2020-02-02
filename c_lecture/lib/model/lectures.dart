@@ -26,6 +26,7 @@ class Lecture {
     String title;
     String path;
     String imagePath;
+    String level;
 
     Lecture({this.title, this.path});
 

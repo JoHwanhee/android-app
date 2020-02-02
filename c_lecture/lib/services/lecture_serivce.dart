@@ -5,6 +5,7 @@ import 'package:c_lecture/util/util.dart';
 class LectureService{
     Future<Lectures> getLectures() async {
         final url = Const.LectureServerUrl + Const.IndexJsonPath;
+        print(url);
         return Lectures.fromJson(await HttpUtil.httpGetBodyToJson(url));
     }
 
