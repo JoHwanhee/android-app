@@ -86,10 +86,10 @@ class _HomePageState extends State<HomePage> {
 
           Flexible(
             child: _lectures == null
-                ? Center(
-                    child: CircularProgressIndicator(),
-                  )
-                : PopularCourseListView(lectures: _lectures),
+              ? Center(
+            child: CircularProgressIndicator(),
+          )
+              : PopularCourseListView(lectures: _lectures),
           )
         ],
       ),

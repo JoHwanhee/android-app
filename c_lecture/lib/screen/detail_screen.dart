@@ -1,14 +1,37 @@
 import 'package:c_lecture/const.dart';
+import 'package:c_lecture/model/lectures.dart';
 import 'package:c_lecture/pages/list_page.dart';
+import 'package:c_lecture/services/lecture_serivce.dart';
 import 'package:flutter/material.dart';
 
-class DetailPage extends StatelessWidget {
-    final Lesson lesson;
-    DetailPage({Key key, this.lesson}) : super(key: key);
+class DetailPage extends StatefulWidget {
+    final Lecture lecture;
+    DetailPage({Key key, this.lecture}) : super(key: key);
+
+  @override
+  _DetailPageState createState() => _DetailPageState();
+}
+
+class _DetailPageState extends State<DetailPage> {
+    LectureService _lectureService = LectureService();
+    String _markdownData;
+
+    @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+
+    _lectureService.getContents(widget.lecture).then((res) {
+        setState(() {
+            _markdownData = res;
+        });
+    });
+  }
     @override
     Widget build(BuildContext context) {
         final bottomContentText = Text(
-            lesson.content,
+            _markdownData,
             style: TextStyle(fontSize: 18.0),
         );
 
@@ -40,7 +63,7 @@ class DetailPage extends StatelessWidget {
                         floating: false,
                         pinned: true,
                         flexibleSpace: FlexibleSpaceBar(
-                            title: Text(lesson.title),
+                            title: Text(widget.lecture.title),
                             background: Image.network(Const.LectureServerUrl + Const.TitleImagePath,
                                 fit: BoxFit.cover
                             ),
