@@ -29,6 +29,7 @@ dependencies:
   provider: ^4.0.2
   fancy_bottom_navigation: ^0.1.0
   shared_preferences: ^0.5.6+1
+  firebase_admob:
 
 dev_dependencies:
   flutter_test:

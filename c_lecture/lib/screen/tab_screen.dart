@@ -1,6 +1,7 @@
 import 'dart:io';
 
-import 'package:c_lecture/pages/home_page.dart';
+
+import 'package:c_lecture/pages/list_page.dart';
 import 'package:c_lecture/pages/profile_page.dart';
 import 'package:fancy_bottom_navigation/fancy_bottom_navigation.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +27,7 @@ class _TabScreenState extends State<TabScreen> {
           physics: NeverScrollableScrollPhysics(),
           controller: _controller,
           children: <Widget>[
-            HomePage(),
+            ListPage(title: 'C Language',),
             ProfilePage(),
           ],
         ),

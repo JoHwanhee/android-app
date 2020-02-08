@@ -1,7 +1,9 @@
 
+import 'package:c_lecture/main.dart';
 import 'package:c_lecture/model/lectures.dart';
 import 'package:c_lecture/screen/detail_screen.dart';
 import 'package:c_lecture/services/lecture_serivce.dart';
+import 'package:firebase_admob/firebase_admob.dart';
 import 'package:flutter/material.dart';
 
 class ListPage extends StatefulWidget {
@@ -18,6 +20,7 @@ class _ListPageState extends State<ListPage> {
 
     @override
     void initState() {
+        super.initState();
 
         LectureService().getLectures().then((res) {
             setState(() {
@@ -25,7 +28,8 @@ class _ListPageState extends State<ListPage> {
             });
         });
 
-        super.initState();
+
+
     }
 
     @override
@@ -106,19 +110,41 @@ class _ListPageState extends State<ListPage> {
             elevation: 0.1,
             backgroundColor: Color.fromRGBO(58, 66, 86, 1.0),
             title: Text(widget.title),
-            actions: <Widget>[
-                IconButton(
-                    icon: Icon(Icons.list),
-                    onPressed: () {},
-                )
-            ],
+        );
+
+        final makeBottom = Container(
+            height: 55.0,
+            child: BottomAppBar(
+                color: Color.fromRGBO(58, 66, 86, 1.0),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                        IconButton(
+                            icon: Icon(Icons.home, color: Colors.white),
+                            onPressed: () {},
+                        ),
+                        IconButton(
+                            icon: Icon(Icons.blur_on, color: Colors.white),
+                            onPressed: () {},
+                        ),
+                        IconButton(
+                            icon: Icon(Icons.hotel, color: Colors.white),
+                            onPressed: () {},
+                        ),
+                        IconButton(
+                            icon: Icon(Icons.account_box, color: Colors.white),
+                            onPressed: () {},
+                        )
+                    ],
+                ),
+            ),
         );
 
         return Scaffold(
             backgroundColor: Color.fromRGBO(58, 66, 86, 1.0),
             appBar: topAppBar,
             body: makeBody,
-
+            bottomNavigationBar: makeBottom,
         );
     }
 }
