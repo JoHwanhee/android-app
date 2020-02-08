@@ -13,7 +13,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Install dependencies
-      working-directory: /c-lecture/c-lecture
+      working-directory: /c-lecture
       run: pub get
     - name: Run tests
       run: pub run test
