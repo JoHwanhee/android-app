@@ -28,8 +28,8 @@ dependencies:
   test: any
   provider: ^4.0.2
   shared_preferences: ^0.5.6+1
-  firebase_admob:
   bottom_navy_bar: ^5.3.2
+  admob_flutter: ^0.3.3
 
 dev_dependencies:
   flutter_test:

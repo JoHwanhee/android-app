@@ -1,9 +1,12 @@
+import 'package:admob_flutter/admob_flutter.dart';
 import 'package:c_lecture/const.dart';
 import 'package:c_lecture/model/lectures.dart';
 import 'package:c_lecture/pages/list_page.dart';
 import 'package:c_lecture/services/lecture_serivce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+
+import '../main.dart';
 
 class DetailPage extends StatefulWidget {
   final Lecture lecture;
@@ -17,6 +20,9 @@ class DetailPage extends StatefulWidget {
 class _DetailPageState extends State<DetailPage> {
   LectureService _lectureService = LectureService();
   String _markdownData;
+
+
+  Admob admob = AdmobManager.initAdMob();
 
   @override
   void initState() {
@@ -46,26 +52,21 @@ class _DetailPageState extends State<DetailPage> {
 
     final _scr = PrimaryScrollController.of(context);
 
-    final bottomContentText = SafeArea(
-      child: Markdown(
-        selectable: true,
-        data: _markdownData,
-        imageDirectory: Const.LectureServerUrl,
-      ),
-    );
-
-    final bottomContent = Container(
-        width: MediaQuery.of(context).size.width,
-        padding: EdgeInsets.all(40.0),
-        child: bottomContentText);
-    /*children: <Widget>[topContent, bottomContent],*/
 
     return Scaffold(
       appBar: topAppBar,
       body: Container(
           child: Markdown(
               controller: _scr,
-              data: _markdownData)),
+              data: _markdownData,
+              imageDirectory: Const.ImageServerDirectory,
+          )),
+      bottomNavigationBar: (admob != null)
+          ? Container(
+        color: Colors.blueGrey,
+        child: AdmobManager.bottomBanner,
+      )
+          : null,
     );
   }
 
