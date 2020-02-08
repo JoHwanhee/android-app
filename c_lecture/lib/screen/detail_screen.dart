@@ -32,6 +32,12 @@ class _DetailPageState extends State<DetailPage> {
 
   @override
   Widget build(BuildContext context) {
+    final topAppBar = AppBar(
+      elevation: 0.1,
+      backgroundColor: Color.fromRGBO(58, 66, 86, 1.0),
+      title: Text(widget.lecture.title),
+    );
+
     if (_markdownData == null) {
       return Center(
         child: CircularProgressIndicator(),
@@ -55,31 +61,11 @@ class _DetailPageState extends State<DetailPage> {
     /*children: <Widget>[topContent, bottomContent],*/
 
     return Scaffold(
-      body: CustomScrollView(
-        controller: _scr,
-        slivers: <Widget>[
-          SliverAppBar(
-            expandedHeight: 200.0,
-            floating: true,
-            pinned: false,
-            flexibleSpace: FlexibleSpaceBar(
-              title: Text(widget.lecture.title),
-              background: Image.network(
-                  Const.LectureServerUrl + Const.TitleImagePath,
-                  fit: BoxFit.cover),
-            ),
-          ),
-          /*SliverFillRemaining(
-            child: bottomContent,
-          ),*/
-          SliverFillRemaining(
-            child: Container(
-                child: Markdown(
-                controller: _scr,
-                data: _markdownData)),
-          )
-        ],
-      ),
+      appBar: topAppBar,
+      body: Container(
+          child: Markdown(
+              controller: _scr,
+              data: _markdownData)),
     );
   }
 
