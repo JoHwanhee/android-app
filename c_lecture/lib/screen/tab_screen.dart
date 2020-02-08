@@ -1,9 +1,9 @@
 import 'dart:io';
 
 
+import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:c_lecture/pages/list_page.dart';
-import 'package:c_lecture/pages/profile_page.dart';
-import 'package:fancy_bottom_navigation/fancy_bottom_navigation.dart';
+import 'package:c_lecture/pages/settings_page.dart';
 import 'package:flutter/material.dart';
 
 class TabScreen extends StatefulWidget {
@@ -20,66 +20,72 @@ class _TabScreenState extends State<TabScreen> {
 
   int _page = 0;
 
-  @override
-  Widget build(BuildContext context) {
-    return new Scaffold(
-        body: PageView(
-          physics: NeverScrollableScrollPhysics(),
-          controller: _controller,
-          children: <Widget>[
-            ListPage(title: 'C Language',),
-            ProfilePage(),
-          ],
-        ),
-        bottomNavigationBar: FancyBottomNavigation(
-          circleColor: Colors.blue,
-          inactiveIconColor: Colors.blue,
-          initialSelection: 0,
-          barBackgroundColor: Colors.white70,
-          tabs: [
-            TabData(iconData: Icons.home, title: "Home"),
-            TabData(iconData: Icons.settings, title: "Settings")
-          ],
-          onTabChangedListener: (position) {
-            setState(() {
-              _page = position;
-              navigationTapped(_page);
-            });
-          },
-
-        ));
-  }
-
-  final makeBottom = Container(
-    height: 55.0,
-    child: BottomAppBar(
-      color: Color.fromRGBO(58, 66, 86, 1.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          IconButton(
-            icon: Icon(Icons.home, color: Colors.white),
-            onPressed: () {},
+  Future<bool> _onWillPop() {
+    return showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Are you sure?'),
+        content: Text('Do you want to exit an App'),
+        actions: <Widget>[
+          FlatButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: Text('No'),
           ),
-          IconButton(
-            icon: Icon(Icons.blur_on, color: Colors.white),
-            onPressed: () {},
+          FlatButton(
+            onPressed: () => exit(0),
+            /*Navigator.of(context).pop(true)*/
+            child: Text('Yes'),
           ),
-          IconButton(
-            icon: Icon(Icons.hotel, color: Colors.white),
-            onPressed: () {},
-          ),
-          IconButton(
-            icon: Icon(Icons.account_box, color: Colors.white),
-            onPressed: () {},
-          )
         ],
       ),
-    ),
-  );
+    ) ??
+        false;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return
+      WillPopScope(
+        onWillPop: _onWillPop,
+        child: Scaffold(
+
+          body: PageView(
+            physics: NeverScrollableScrollPhysics(),
+            controller: _controller,
+            children: <Widget>[
+              ListPage(title: 'C Language'),
+              SettingPage(title: 'Settings'),
+            ],
+          ),
+          bottomNavigationBar:  BottomNavigationBar(
+            items: const <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: Icon(Icons.school),
+                title: Text('Lecture'),
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.exit_to_app),
+                title: Text('Exit'),
+              ),
+            ],
+            currentIndex: _page,
+            selectedItemColor: Colors.white,
+            backgroundColor: Color.fromRGBO(58, 66, 86, 1.0),
+            onTap: navigationTapped,
+          ),
+
+
+        )
+      );
+  }
 
   void navigationTapped(int page) {
-    _controller.jumpToPage(page);
+    if(page == 1)
+      _onWillPop();
+    else{
+      _controller.jumpToPage(page);
+      onPageChanged(page);
+    }
   }
 
   @override

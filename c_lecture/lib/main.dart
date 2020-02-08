@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_admob/firebase_admob.dart';
 
+import 'screen/tab_screen.dart';
+
 final String _appId = 'ca-app-pub-7900199678363792~2460237454';
 final String _bannerUnitId = 'ca-app-pub-3940256099942544/6300978111';
 
@@ -35,23 +37,16 @@ MobileAdTargetingInfo targetingInfo = MobileAdTargetingInfo(
 );
 
 class MyApp extends StatelessWidget {
-
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    
-
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.blueGrey,
       ),
       home: SplashScreen(),
       routes: <String, WidgetBuilder>{
-        '/TabScreen': (BuildContext context) => new ListPage(
-              title: 'C Language',
-            ),
+        '/TabScreen': (BuildContext context) => new TabScreen(),
       },
     );
   }
