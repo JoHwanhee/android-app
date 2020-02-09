@@ -62,7 +62,7 @@ class MyApp extends StatelessWidget {
 
 
 class AdmobManager {
-  static bool _isTest = true;
+  static bool _isTest = false;
 
   static String test_app_id = 'ca-app-pub-7900199678363792~2460237454';
   static String test_banner_id = 'ca-app-pub-3940256099942544/6300978111';

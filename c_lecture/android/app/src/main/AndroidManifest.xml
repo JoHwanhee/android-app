@@ -3,7 +3,7 @@
 
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="c_lecture"
+        android:label="쉽게 배우는 씨 언어"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
@@ -27,4 +27,6 @@
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-7900199678363792~2460237454"/>
     </application>
+
+    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>
