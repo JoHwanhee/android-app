@@ -1,1 +1,32 @@
-https://update.hiworks.com/caps/HiworksCaps.txt
+[REGESTRY]
+RegTree_RootKey=HKCU
+RegTree_KeyPath=SOFTWARE\Hiworks\Caps
+RegKey_ProgDir=ProgDir
+RegKey_ProgVer=ProgVer
+RegValue_ExeName=HiworksCaps.exe
+
+[SERVER]
+SERVER_Setup=update.hiworks.com
+SERVER_Patch=update.hiworks.com
+
+[SETUP]
+URL_SetupFile=caps
+SetupFileCrc=HiworksCapsSetup.exe	5494072	b3a93a70
+DefaultFolder=Program Files/Hiworks/Caps/
+AutoButton=1
+
+[PATCH]
+URL_PatchFile=caps
+
+[FILE_VERSION]
+VerMin=-1
+VerMax=100
+FileCnt=000001
+FileVersion=1.0.1.6
+
+[AddInstall]
+FileCnt=000000
+
+[FILE_CRC]
+FileCnt=000001
+HiworksCapsHistory.txt	2449	5f161451
