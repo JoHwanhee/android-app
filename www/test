@@ -22,7 +22,7 @@ URL_PatchFile=caps
 VerMin=-1
 VerMax=100
 FileCnt=000001
-FileVersion=1.0.1.7
+FileVersion=1.0.1.6
 
 [AddInstall]
 FileCnt=000000
