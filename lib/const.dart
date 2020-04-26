@@ -1,8 +1,8 @@
 import 'dart:io';
 
 class Const {
-    static const String LectureServerUrl = "https://amazing-jepsen-a459f1.netlify.com";
-    static const String LectureCLangServerUrl = "https://amazing-jepsen-a459f1.netlify.com/c";
+    static const String LectureServerUrl = "https://raw.githubusercontent.com/JoHwanhee/c-lecture/master/www";
+    static const String LectureCLangServerUrl = "https://raw.githubusercontent.com/JoHwanhee/c-lecture/master/www/c";
     static const String ImageServerDirectory = "https://raw.githubusercontent.com/JoHwanhee/c-lecture/master/www/c/";
     static const String IndexJsonPath = "/index.json";
     static const String TitleImagePath = "/title.jpg";
