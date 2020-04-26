@@ -16,7 +16,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Install dependencies
-      run: flutter pub get
-    - name: Run tests
-      run: flutter pub run test
+    - uses: actions/setup-java@v1
+      with:
+        java-version: '12.x'
+    - uses: subosito/flutter-action@v1
+      with:
+        flutter-version: '1.9.1+hotfix.6'
+    - run: flutter pub get
+    - run: flutter test
+    - run: flutter build apk
