@@ -1,11 +1,11 @@
 import 'dart:io';
 
 
-import 'package:admob_flutter/admob_flutter.dart';
-import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:c_lecture/pages/list_page.dart';
 import 'package:c_lecture/pages/settings_page.dart';
+import 'package:facebook_audience_network/facebook_audience_network.dart';
 import 'package:flutter/material.dart';
+import 'package:in_app_update/in_app_update.dart';
 
 import '../main.dart';
 
@@ -24,9 +24,27 @@ class _TabScreenState extends State<TabScreen> {
   int _page = 0;
 
 
+  void checkUpdate() async {
+    try
+    {
+      var info = await InAppUpdate.checkForUpdate();
+      if(info.updateAvailable){
+        InAppUpdate.startFlexibleUpdate();
+      }
+    } on Exception catch (_) {
+
+    }
+
+  }
+
   @override
   void initState() {
     // TODO: implement initState
+
+    checkUpdate();
+
+    FacebookAudienceNetwork.init();
+
     super.initState();
     _controller = PageController(initialPage: 0);
 
@@ -40,8 +58,6 @@ class _TabScreenState extends State<TabScreen> {
   }
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
-  AdmobBannerSize bannerSize = AdmobBannerSize.BANNER;
-
 
   Future<bool> _onWillPop() {
     return showDialog(
@@ -49,14 +65,9 @@ class _TabScreenState extends State<TabScreen> {
       builder: (context) => AlertDialog(
         titlePadding:
         const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-        title: Container(child: Text("Do you want to leave?")),
+        title: Container(child: Text("종료 하시겠습니까?")),
         contentPadding: const EdgeInsets.all(0),
-        content: Container(
-          margin: const EdgeInsets.all(0),
-          padding: const EdgeInsets.all(3),
-          decoration: BoxDecoration(color: Colors.white),
-          child: AdmobManager.finishBanner,
-        ),
+
         actions: <Widget>[
           FlatButton(
             onPressed: () => Navigator.of(context).pop(false),
@@ -72,47 +83,6 @@ class _TabScreenState extends State<TabScreen> {
     ) ??
         false;
   }
-
-
-
-  _defaultWillPop() async {
-    var result = await showDialog(
-      context: scaffoldKey.currentContext,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          titlePadding:
-          const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-          title: Container(child: Text("Do you want to leave?")),
-          contentPadding: const EdgeInsets.all(0),
-          content: Container(
-            margin: const EdgeInsets.all(0),
-            padding: const EdgeInsets.all(7),
-            decoration: BoxDecoration(color: Colors.white),
-            child: AdmobManager.finishBanner,
-          ),
-          actions: <Widget>[
-            FlatButton(
-              child: Text("CANCEL"),
-              onPressed: () {
-                Navigator.pop(context, false);
-              },
-            ),
-            FlatButton(
-              child: Text("OK"),
-              onPressed: () {
-                Navigator.pop(context, true);
-              },
-            ),
-          ],
-        );
-      },
-    );
-
-    return result;
-  }
-
-
 
   @override
   Widget build(BuildContext context) {

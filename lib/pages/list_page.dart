@@ -1,6 +1,4 @@
 
-import 'package:admob_flutter/admob_flutter.dart';
-import 'package:c_lecture/main.dart';
 import 'package:c_lecture/model/lectures.dart';
 import 'package:c_lecture/screen/detail_screen.dart';
 import 'package:c_lecture/services/lecture_serivce.dart';
@@ -96,20 +94,7 @@ class _ListPageState extends State<ListPage> {
                 shrinkWrap: true,
                 itemCount: _lectures.data.length,
                 itemBuilder: (BuildContext context, int index) {
-                    if(index != 0 && index % 4 == 0){
-                        return Column(
-                            children: <Widget>[
-                                Container(
-                                    margin: const EdgeInsets.all(5),
-                                    child: AdmobManager.bottomBanner,
-                                ),
-                                makeCard(_lectures.data[index])
-                            ],
-                        );
-                    }
-                    else {
-                        return makeCard(_lectures.data[index]);
-                    }
+                    return makeCard(_lectures.data[index]);
 
                 },
             ),

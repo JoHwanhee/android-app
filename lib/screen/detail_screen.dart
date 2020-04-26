@@ -1,12 +1,9 @@
-import 'package:admob_flutter/admob_flutter.dart';
 import 'package:c_lecture/const.dart';
 import 'package:c_lecture/model/lectures.dart';
-import 'package:c_lecture/pages/list_page.dart';
 import 'package:c_lecture/services/lecture_serivce.dart';
+import 'package:facebook_audience_network/facebook_audience_network.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
-
-import '../main.dart';
 
 class DetailPage extends StatefulWidget {
   final Lecture lecture;
@@ -21,13 +18,28 @@ class _DetailPageState extends State<DetailPage> {
   LectureService _lectureService = LectureService();
   String _markdownData;
 
-
-  Admob admob = AdmobManager.initAdMob();
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    if(Const.AdCount < 1){
+      FacebookInterstitialAd.loadInterstitialAd(
+        placementId: "610582579805224_610601026470046",
+        listener: (result, value) {
+          if (result == InterstitialAdResult.LOADED){
+            FacebookInterstitialAd.showInterstitialAd();
+            Const.AdCount ++;
+          }
+
+        },
+      );
+    }
+    else if(Const.AdCount > 4){
+      Const.AdCount = 0;
+    }
+    else{
+      Const.AdCount ++;
+    }
 
     _lectureService.getContents(widget.lecture).then((res) {
       setState(() {
@@ -61,15 +73,7 @@ class _DetailPageState extends State<DetailPage> {
               data: _markdownData,
               imageDirectory: Const.ImageServerDirectory,
           )),
-      bottomNavigationBar: (admob != null)
-          ? Container(
-        color: Colors.blueGrey,
-        child: AdmobManager.bottomBanner,
-      )
-          : null,
+
     );
   }
-
-
-
 }
