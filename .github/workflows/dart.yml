@@ -29,3 +29,13 @@ jobs:
     - run: flutter pub get
     - run: flutter test
     - run: flutter install
+    - run: flutter build appbundle
+    - uses: r0adkll/upload-google-play@v1
+      with:
+        serviceAccountJson: ${{ SERVICE_ACCOUNT_JSON }}
+        packageName: ga.clecture.c_lecture
+        releaseFile: ${{ SIGNED_RELEASE_FILE}}
+        track: beta
+        userFraction: 0.33
+        whatsNewDirectory: /distribution/whatsnew
+        mappingFile: /app/build/outputs/mapping/release/mapping.txt
