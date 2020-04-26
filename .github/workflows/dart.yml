@@ -34,7 +34,7 @@ jobs:
       with:
         serviceAccountJson: ${{ SERVICE_ACCOUNT_JSON }}
         packageName: ga.clecture.c_lecture
-        releaseFile: ${{ SIGNED_RELEASE_FILE}}
+        releaseFile: build/app/outputs/bundle/release/app-release.aab
         track: beta
         userFraction: 0.33
         whatsNewDirectory: /distribution/whatsnew
