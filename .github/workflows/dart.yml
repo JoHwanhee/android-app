@@ -28,7 +28,6 @@ jobs:
         channel: 'stable' # or: 'dev' or 'beta'
     - run: flutter pub get
     - run: flutter test
-    - run: flutter install
     - run: flutter build appbundle
     - uses: r0adkll/upload-google-play@v1
       with:
