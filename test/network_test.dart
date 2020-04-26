@@ -13,12 +13,12 @@ import 'package:flutter_test/flutter_test.dart';
 
 
 void main() {
-    test('Counter increments smoke test', () async {
+    test('첫 번째 게시글의 제목은 1. 프로그래밍이란 무엇인가. 이어야 한다.', () async {
         LectureService lectureService = LectureService();
         var lectures = await lectureService.getLectures();
         print(lectures.data[0].title);
         print(lectures.data[0].path);
-        expect(lectures.data[0].title.isEmpty, false);
+        expect(lectures.data[0].title, "1. 프로그래밍이란 무엇인가.");
     });
 }
 
