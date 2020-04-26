@@ -94,7 +94,6 @@ class _LectureViewScreenState extends State<LectureViewScreen> {
     final controller = ScrollController();
 
     if(_markdownData == null ){
-
       return Center(
           child: Container(
               child: CircularProgressIndicator(),

@@ -68,7 +68,7 @@ class AdmobManager {
   static String test_banner_id = 'ca-app-pub-3940256099942544/6300978111';
 
   static String app_id = "ca-app-pub-7900199678363792~2460237454";
-  static String banner_id = "ca-app-pub-7900199678363792/2995918918 ";
+  static String banner_id = "ca-app-pub-7900199678363792/2995918918";
 
   static Admob initAdMob() {
     print("initAdMob");
@@ -77,7 +77,7 @@ class AdmobManager {
 
   static AdmobBanner bottomBanner = AdmobBanner(
     adUnitId: _isTest ? test_banner_id : banner_id,
-    adSize: AdmobBannerSize.BANNER,
+    adSize: AdmobBannerSize.FULL_BANNER,
   );
 
   static AdmobBanner finishBanner = AdmobBanner(
