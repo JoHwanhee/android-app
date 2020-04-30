@@ -4,7 +4,9 @@ import 'dart:io';
 import 'package:c_lecture/pages/list_page.dart';
 import 'package:c_lecture/pages/settings_page.dart';
 import 'package:facebook_audience_network/facebook_audience_network.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:in_app_update/in_app_update.dart';
 
 import '../main.dart';
@@ -23,6 +25,10 @@ class _TabScreenState extends State<TabScreen> {
 
   int _page = 0;
 
+  FirebaseAuth auth = FirebaseAuth.instance;
+  GoogleSignIn googleSignIn = GoogleSignIn();
+
+
 
   void checkUpdate() async {
     try
@@ -37,18 +43,20 @@ class _TabScreenState extends State<TabScreen> {
 
   }
 
+  void login() async {
+
+  }
+
   @override
   void initState() {
-    // TODO: implement initState
-
     checkUpdate();
-
     FacebookAudienceNetwork.init();
 
     super.initState();
+
+    login();
+
     _controller = PageController(initialPage: 0);
-
-
   }
 
   @override

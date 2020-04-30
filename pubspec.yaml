@@ -31,6 +31,8 @@ dependencies:
   bottom_navy_bar: ^5.3.2
   facebook_audience_network: ^0.5.0
   in_app_update: ^1.1.7
+  firebase_auth: ^0.15.0+1
+  google_sign_in: ^4.0.14
 
 dev_dependencies:
   flutter_test:
