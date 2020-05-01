@@ -33,36 +33,49 @@ class _FeedPageState extends State<FeedPage> {
     setState(() {
       feed = widget.feed;
     });
-
+  }
+  @override
+  void dispose(){
+    _textController.dispose();
+    super.dispose();
   }
 
-  /// Loads the document to be edited in Zefyr.
-  NotusDocument _loadDocument() {
-    // For simplicity we hardcode a simple document with one line of text
-    // saying "Zefyr Quick Start".
-    // (Note that delta must always end with newline.)
-    final Delta delta = Delta()..insert("Zefyr Quick Start\n");
-    return NotusDocument.fromDelta(delta);
-  }
-
-  Widget _buildTextComposer() {
+  Widget _buildTextField(){
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 8.0),
       child: TextField(
         controller: _textController,
+        keyboardType: TextInputType.multiline,
+        maxLines: null,
         onSubmitted: _handleSubmitted,
         cursorColor: Colors.white,
-        autofocus: true,
+
         style: new TextStyle(color: Colors.white),
-        decoration: new InputDecoration.collapsed(hintText: "Write a message", hintStyle: TextStyle(fontSize: 14.0, color: Colors.blueGrey),
+        decoration: new InputDecoration.collapsed(hintText: "Write a message",
+          hintStyle: TextStyle(fontSize: 14.0, color: Colors.blueGrey),
 
         ),
       ),
     );
   }
 
+
+  Widget _buildTextComposer() {
+    return Row(children: <Widget>[
+      Flexible(child: _buildTextField()),
+      Container(
+        margin: const EdgeInsets.symmetric(horizontal: 4.0),
+        child: IconButton(icon: Icon(Icons.send, color: Colors.white,),
+            onPressed: () => _handleSubmitted(_textController.text)),),
+      ]);
+  }
+
   void _handleSubmitted(String text) {
-    var json = { 'user_id' : feed.userId, 'content' : _textController.text, 'created': DateTimeUtils.getUtcString()};
+    var json = {
+      'user_id': feed.userId,
+      'content': _textController.text,
+      'created': DateTimeUtils.getUtcString()
+    };
     FeedService().postReply(feed.id, jsonEncode(json));
 
     setState(() {
@@ -74,22 +87,14 @@ class _FeedPageState extends State<FeedPage> {
 
   @override
   Widget build(BuildContext context) {
-    /*       if( _lectures == null )
-            return Container(
-                color: Color.fromRGBO(58, 66, 86, 1.0),
-                    child: Center(
-                        child: CircularProgressIndicator()
-                )
-            );*/
-
-    ListTile makeContents(index) => ListTile(
+    ListTile makeContents(index) =>
+        ListTile(
           dense: true,
           contentPadding: EdgeInsets.only(left: 15, right: 16),
           title: Text(
             feed.replies[index].content,
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
           ),
-          // subtitle: Text("Intermediate", style: TextStyle(color: Colors.white)),
 
           subtitle: Row(
             children: <Widget>[
@@ -104,7 +109,8 @@ class _FeedPageState extends State<FeedPage> {
                 flex: 0,
                 child: Padding(
                     padding: EdgeInsets.only(left: 5.0, bottom: 0, top: 3),
-                    child: Text(DateTimeUtils.utcStringToLocalString(feed.replies[index].created),
+                    child: Text(DateTimeUtils.utcStringToLocalString(
+                        feed.replies[index].created),
                         style: TextStyle(color: Colors.grey))),
               )
             ],
@@ -119,33 +125,38 @@ class _FeedPageState extends State<FeedPage> {
             Container(
               alignment: Alignment.centerLeft,
               margin: EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
-              padding: EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
-              child: Text(feed.content, style: TextStyle(color: Colors.white, fontSize: 16),),
+              padding: EdgeInsets.only(
+                  left: 10, right: 10, top: 10, bottom: 10),
+              child: Text(feed.content,
+                style: TextStyle(color: Colors.white, fontSize: 16),),
             ),
             Row(
 
               children: <Widget>[
                 Container(
                   padding: EdgeInsets.only(left: 15.0, bottom: 10, top: 3),
-                  child: Icon(Icons.question_answer, color: Colors.white,size: 15,
+                  child: Icon(
+                    Icons.question_answer, color: Colors.white, size: 15,
                   ),
                 ),
                 Container(
                   padding: EdgeInsets.only(left: 15.0, bottom: 10, top: 3),
-                  child: Text(feed.replies.length.toString(), style: TextStyle(color: Colors.white),),
+                  child: Text(feed.replies.length.toString(),
+                    style: TextStyle(color: Colors.white),),
                 ),
                 Expanded(
                   flex: 0,
                   child: Padding(
                       padding: EdgeInsets.only(left: 15.0, bottom: 10, top: 3),
-                      child: Text(feed.isAdmin ? "관리자": feed.userId,
+                      child: Text(feed.isAdmin ? "관리자" : feed.userId,
                           style: TextStyle(color: Colors.grey))),
                 ),
                 Expanded(
                   flex: 0,
                   child: Padding(
                       padding: EdgeInsets.only(left: 5.0, bottom: 8, top: 3),
-                      child: Text(DateTimeUtils.utcStringToLocalString(feed.created),
+                      child: Text(
+                          DateTimeUtils.utcStringToLocalString(feed.created),
                           style: TextStyle(color: Colors.grey))),
                 )
               ],
@@ -157,16 +168,16 @@ class _FeedPageState extends State<FeedPage> {
           color: Colors.white10,
         ),
         Expanded(
-        child:  RefreshIndicator(
-          onRefresh: _getData,
-          child: ListView.builder(
-          scrollDirection: Axis.vertical,
-            shrinkWrap: true,
-            itemCount: feed.replies.length,
-            itemBuilder: (BuildContext context, int index) {
-              return makeContents(index);
-            },),
-        )),
+            child: RefreshIndicator(
+              onRefresh: _getData,
+              child: ListView.builder(
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                itemCount: feed.replies.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return makeContents(index);
+                },),
+            )),
         _buildTextComposer()
       ],
 
@@ -199,6 +210,4 @@ class _FeedPageState extends State<FeedPage> {
       feed = result;
     });
   }
-
-
 }

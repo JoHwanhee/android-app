@@ -40,7 +40,7 @@ class EditorPageState extends State<EditorPage> {
       return iosDeviceInfo.identifierForVendor; // unique ID on iOS
     } else {
       AndroidDeviceInfo androidDeviceInfo = await deviceInfo.androidInfo;
-
+      print(androidDeviceInfo.androidId);
       return androidDeviceInfo.androidId; // unique ID on Android
     }
   }

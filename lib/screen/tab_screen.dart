@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:c_lecture/pages/feeds_page.dart';
 import 'package:c_lecture/pages/list_page.dart';
 import 'package:c_lecture/pages/settings_page.dart';
-import 'package:device_id/device_id.dart';
 import 'package:facebook_audience_network/facebook_audience_network.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -42,8 +41,6 @@ class _TabScreenState extends State<TabScreen> {
   void initFacebook() async {
     try
     {
-      var appId = await DeviceId.getID;
-
       FacebookAudienceNetwork.init();
 
     } on Exception catch (_) {
