@@ -1,0 +1,13 @@
+{
+    "code" : "0000",
+    "data" : [
+        {
+            "user_id" : "관리자",
+            "is_notice" : true,
+            "created" : "20.05.01 01:22:47",
+            "reply_count" : 0,
+            "content" : "QnA가 열렸습니다! 마음껏 질문해주세요. ()",
+            "feed_id" : 0
+        }
+    ]
+}
