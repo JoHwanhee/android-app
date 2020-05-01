@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 
 class HexColor extends Color {
     HexColor(final String hexColor) : super(_getColorFromHex(hexColor));
@@ -26,6 +27,28 @@ class HttpUtil {
         var res = await http.get(url);
         return utf8.decode(res.bodyBytes);
     }
+
+    static Future<String> httpPost(String url, String body) async {
+        final res = await http.post(
+            url,
+            body: body,
+            headers: {'Content-Type': "application/json"},
+        );
+        return utf8.decode(res.bodyBytes);
+    }
 }
 
+class DateTimeUtils {
+    static const String timeforamt ="yyyy-MM-dd HH:mm:ss";
 
+    static String utcStringToLocalString(utc_string) {
+        var dateTime = DateFormat(timeforamt).parse(utc_string, true);
+        var dateLocal = dateTime.toLocal();
+        return new DateFormat(timeforamt).format(dateLocal);
+    }
+
+    static String getUtcString(){
+        var now = DateTime.now().toUtc();
+        return new DateFormat(timeforamt).format(now);
+    }
+}

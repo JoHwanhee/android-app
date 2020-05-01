@@ -7,5 +7,8 @@ class Const {
     static const String IndexJsonPath = "/index.json";
     static const String TitleImagePath = "/title.jpg";
 
+    static const String FeedServerUrl = "https://api.c-lecture.ga:49490";
+
     static int AdCount = 0;
+    static int NativeAdCount = 0;
 }

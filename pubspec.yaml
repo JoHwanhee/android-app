@@ -33,7 +33,11 @@ dependencies:
   in_app_update: ^1.1.7
   firebase_auth: ^0.15.0+1
   google_sign_in: ^4.0.14
-
+  device_info: ^0.4.0+4
+  zefyr: 0.10.0
+  intl: ^0.16.1
+  auto_size_text: ^2.1.0
+  device_id: ^0.2.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

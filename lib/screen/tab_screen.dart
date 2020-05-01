@@ -1,8 +1,10 @@
 import 'dart:io';
 
 
+import 'package:c_lecture/pages/feeds_page.dart';
 import 'package:c_lecture/pages/list_page.dart';
 import 'package:c_lecture/pages/settings_page.dart';
+import 'package:device_id/device_id.dart';
 import 'package:facebook_audience_network/facebook_audience_network.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -25,11 +27,6 @@ class _TabScreenState extends State<TabScreen> {
 
   int _page = 0;
 
-  FirebaseAuth auth = FirebaseAuth.instance;
-  GoogleSignIn googleSignIn = GoogleSignIn();
-
-
-
   void checkUpdate() async {
     try
     {
@@ -40,21 +37,26 @@ class _TabScreenState extends State<TabScreen> {
     } on Exception catch (_) {
 
     }
-
   }
 
-  void login() async {
+  void initFacebook() async {
+    try
+    {
+      var appId = await DeviceId.getID;
 
+      FacebookAudienceNetwork.init();
+
+    } on Exception catch (_) {
+
+    }
   }
-
   @override
   void initState() {
     checkUpdate();
-    FacebookAudienceNetwork.init();
+    initFacebook();
+
 
     super.initState();
-
-    login();
 
     _controller = PageController(initialPage: 0);
   }
@@ -107,6 +109,7 @@ class _TabScreenState extends State<TabScreen> {
               controller: _controller,
               children: <Widget>[
                 ListPage(title: 'C Language'),
+                FeedsPage(title: 'Feeds'),
                 SettingPage(title: 'Settings'),
               ],
             ),
@@ -117,6 +120,10 @@ class _TabScreenState extends State<TabScreen> {
               BottomNavigationBarItem(
                 icon: Icon(Icons.school),
                 title: Text('Lecture'),
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.question_answer),
+                title: Text('Feeds'),
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.exit_to_app),
@@ -135,7 +142,7 @@ class _TabScreenState extends State<TabScreen> {
   }
 
   void navigationTapped(int page) {
-    if(page == 1)
+    if(page == 2)
       _onWillPop();
     else{
       _controller.jumpToPage(page);
