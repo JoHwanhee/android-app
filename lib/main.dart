@@ -1,11 +1,14 @@
 import 'package:c_lecture/providers/lecture_provier.dart';
 import 'package:c_lecture/screen/login_screen.dart';
 import 'package:c_lecture/screen/splash_screen.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 
 import 'screen/tab_screen.dart';
+
+
 
 void main() {
   runApp(
@@ -16,7 +19,6 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-
 
   @override
   Widget build(BuildContext context) {

@@ -24,6 +24,7 @@ class FeedsPage extends StatefulWidget {
 }
 
 class _FeedsPageState extends State<FeedsPage> {
+  FeedService feedService = FeedService();
   bool _isLoading = false;
   Feeds _feeds;
   int page = 1;
@@ -61,7 +62,7 @@ class _FeedsPageState extends State<FeedsPage> {
 
       ++page;
 
-      var result = await FeedService().getFeeds(page.toString());
+      var result = await feedService.getFeeds(page.toString());
       setState(() {
         if (result.data.length > 0) {
           _feeds.data.addAll(result.data);
@@ -75,7 +76,7 @@ class _FeedsPageState extends State<FeedsPage> {
 
   void fetchUsers() async {
     page = 1;
-    var result = await FeedService().getFeeds("1");
+    var result = await feedService.getFeeds("1");
     setState(() {
       _feeds = result;
     });
@@ -153,7 +154,7 @@ class _FeedsPageState extends State<FeedsPage> {
       Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => FeedPage(title: 'Feed', feed: feed)),
+            builder: (context) => FeedPage(title: 'Feed', id: feed.id)),
       );
     },
   );

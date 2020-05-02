@@ -16,8 +16,9 @@ import 'package:zefyr/zefyr.dart';
 class FeedPage extends StatefulWidget {
   final Feed feed;
   final String title;
+  final String id;
 
-  FeedPage({Key key, this.title, this.feed}) : super(key: key);
+  FeedPage({Key key, this.title, this.feed, this.id}) : super(key: key);
 
   @override
   _FeedPageState createState() => _FeedPageState();
@@ -26,13 +27,23 @@ class FeedPage extends StatefulWidget {
 class _FeedPageState extends State<FeedPage> {
   Feed feed;
   final TextEditingController _textController = new TextEditingController();
-
+  FeedService feedService = FeedService();
   @override
   void initState() {
     super.initState();
-    setState(() {
-      feed = widget.feed;
-    });
+
+      if(widget.feed == null ){
+        feedService.getFeed(widget.id).then((res) {
+          setState(() {
+            feed = res;
+          });
+        });
+      }
+      else {
+        setState(() {
+          feed = widget.feed;
+        });
+      }
   }
   @override
   void dispose(){
@@ -70,23 +81,37 @@ class _FeedPageState extends State<FeedPage> {
       ]);
   }
 
-  void _handleSubmitted(String text) {
-    var json = {
-      'user_id': feed.userId,
-      'content': _textController.text,
-      'created': DateTimeUtils.getUtcString()
-    };
-    FeedService().postReply(feed.id, jsonEncode(json));
 
-    setState(() {
-      feed.replies.add(Replies.fromJson(json));
+
+  void _handleSubmitted(String text) {
+    if (text == null) return;
+    if (text.isEmpty) return;
+
+    DeviceUtil.getId(context).then((res) {
+      var json = {
+        'user_id': res,
+        'content': _textController.text,
+        'created': DateTimeUtils.getUtcString()
+      };
+      feedService.postReply(feed.id, jsonEncode(json));
+
+      setState(() {
+        feed.replies.add(Replies.fromJson(json));
+      });
+
+      _textController.clear();
     });
 
-    _textController.clear();
   }
 
   @override
   Widget build(BuildContext context) {
+    if(feed == null){
+      return Container(
+          color: Color.fromRGBO(58, 66, 86, 1.0),
+          child: Center(child: CircularProgressIndicator()));
+    }
+
     ListTile makeContents(index) =>
         ListTile(
           dense: true,
@@ -168,6 +193,7 @@ class _FeedPageState extends State<FeedPage> {
           color: Colors.white10,
         ),
         Expanded(
+          flex: 1,
             child: RefreshIndicator(
               onRefresh: _getData,
               child: ListView.builder(
@@ -178,6 +204,7 @@ class _FeedPageState extends State<FeedPage> {
                   return makeContents(index);
                 },),
             )),
+
         _buildTextComposer()
       ],
 
@@ -205,7 +232,7 @@ class _FeedPageState extends State<FeedPage> {
 
 
   void fetchReplies() async {
-    var result = await FeedService().getFeed(feed.id);
+    var result = await feedService.getFeed(feed.id);
     setState(() {
       feed = result;
     });

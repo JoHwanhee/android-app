@@ -32,19 +32,6 @@ class EditorPageState extends State<EditorPage> {
     _focusNode = FocusNode();
   }
 
-
-  Future<String> _getId() async {
-    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-    if (Theme.of(context).platform == TargetPlatform.iOS) {
-      IosDeviceInfo iosDeviceInfo = await deviceInfo.iosInfo;
-      return iosDeviceInfo.identifierForVendor; // unique ID on iOS
-    } else {
-      AndroidDeviceInfo androidDeviceInfo = await deviceInfo.androidInfo;
-      print(androidDeviceInfo.androidId);
-      return androidDeviceInfo.androidId; // unique ID on Android
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     // Note that the editor requires special `ZefyrScaffold` widget to be
@@ -55,7 +42,11 @@ class EditorPageState extends State<EditorPage> {
           icon: const Icon(Icons.arrow_forward),
           tooltip: 'Send',
           onPressed: () {
-            _getId().then((res) {
+            if (_textController == null) return;
+            if (_textController.text == null) return;
+            if (_textController.text.isEmpty) return;
+
+            DeviceUtil.getId(context).then((res) {
               var data = {
                 "user_id" : res,
                 "content" : _textController.text,

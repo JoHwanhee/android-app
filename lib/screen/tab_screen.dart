@@ -1,16 +1,24 @@
+import 'dart:convert';
 import 'dart:io';
 
 
+import 'package:c_lecture/pages/feed_page.dart';
 import 'package:c_lecture/pages/feeds_page.dart';
 import 'package:c_lecture/pages/list_page.dart';
 import 'package:c_lecture/pages/settings_page.dart';
+import 'package:c_lecture/services/feed_service.dart';
+import 'package:c_lecture/services/reg_service.dart';
+import 'package:c_lecture/util/util.dart';
 import 'package:facebook_audience_network/facebook_audience_network.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:in_app_update/in_app_update.dart';
 
 import '../main.dart';
+
+final FirebaseMessaging firebaseMessaging = FirebaseMessaging();
 
 class TabScreen extends StatefulWidget {
   static String tag = "/TabScreen";
@@ -52,11 +60,58 @@ class _TabScreenState extends State<TabScreen> {
     checkUpdate();
     initFacebook();
 
-
     super.initState();
-
+    firebaseCloudMessaging_Listeners();
     _controller = PageController(initialPage: 0);
   }
+
+  void iOS_Permission() {
+    firebaseMessaging.requestNotificationPermissions(
+        IosNotificationSettings(sound: true, badge: true, alert: true)
+    );
+    firebaseMessaging.onIosSettingsRegistered
+        .listen((IosNotificationSettings settings)
+    {
+      print("Settings registered: $settings");
+    });
+  }
+
+  void movePage(message) async {
+    var feed = await FeedService().getFeed(message['data']['id']);
+
+    setState(() {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => FeedPage( title: 'Feed', feed: feed,)),
+      );
+    });
+  }
+
+  void firebaseCloudMessaging_Listeners() {
+    if (Platform.isIOS) iOS_Permission();
+
+    firebaseMessaging.getToken().then((token){
+      DeviceUtil.getId(context).then((id) {
+        RegService().postDevice(jsonEncode({"user_id" : id, "device_id": token}));
+        print('token:'+token);
+      });
+    });
+
+    firebaseMessaging.configure(
+      onMessage: (Map<String, dynamic> message) async {
+        print("onMessage: $message");
+        //movePage(message);
+      },
+      onResume: (Map<String, dynamic> message) async {
+        movePage(message);
+      },
+      onLaunch: (Map<String, dynamic> message) async {
+        movePage(message);
+      },
+    );
+  }
+
+
 
   @override
   void dispose() {

@@ -37,6 +37,7 @@ dependencies:
   zefyr: 0.10.0
   intl: ^0.16.1
   auto_size_text: ^2.1.0
+  firebase_messaging: 6.0.9
 
 dev_dependencies:
   flutter_test:
