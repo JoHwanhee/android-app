@@ -17,13 +17,22 @@ class _ListPageState extends State<ListPage> {
     Lectures _lectures;
 
     @override
+    void setState(fn) {
+        if(mounted){
+            super.setState(fn);
+        }
+    }
+
+    @override
     void initState() {
         super.initState();
 
         LectureService().getLectures().then((res) {
-            setState(() {
-                _lectures = res;
-            });
+            if(this.mounted){
+                setState(() {
+                    _lectures = res;
+                });
+            }
         });
     }
 

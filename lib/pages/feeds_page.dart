@@ -31,6 +31,13 @@ class _FeedsPageState extends State<FeedsPage> {
   final ScrollController _scrollController = new ScrollController();
 
   @override
+  void setState(fn) {
+    if(mounted){
+      super.setState(fn);
+    }
+  }
+
+  @override
   void initState() {
     super.initState();
     fetchUsers();
@@ -38,16 +45,21 @@ class _FeedsPageState extends State<FeedsPage> {
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
-        setState(() {
-          fetchMore();
-        });
+        if(this.mounted) {
+          setState(() {
+            fetchMore();
+          });
+        }
       }
     });
 
   }
 
+  bool isDiposed = false;
+
   @override
   void dispose() {
+    isDiposed = true;
     _scrollController.dispose();
     super.dispose();
   }
@@ -63,29 +75,38 @@ class _FeedsPageState extends State<FeedsPage> {
       ++page;
 
       var result = await feedService.getFeeds(page.toString());
-      setState(() {
-        if (result.data.length > 0) {
-          _feeds.data.addAll(result.data);
-        } else {
-          --page;
-        }
-      });
+      if(this.mounted) {
+        setState(() {
+          if (result.data.length > 0) {
+            _feeds.data.addAll(result.data);
+          } else {
+            --page;
+          }
+        });
+      }
       _isLoading = false;
     }
   }
 
   void fetchUsers() async {
     page = 1;
-    var result = await feedService.getFeeds("1");
-    setState(() {
-      _feeds = result;
-    });
+    if(this.mounted){
+      var result = await feedService.getFeeds("1");
+
+      setState(() {
+        _feeds = result;
+      });
+    }
   }
 
   Future<void> _getData() async {
-    setState(() {
-      fetchUsers();
-    });
+    page = 1;
+    if (this.mounted){
+      var result = await feedService.getFeeds("1");
+      setState(() {
+        _feeds = result;
+      });
+    }
   }
 
   _navigateAndDisplaySelection(BuildContext context) async {
@@ -199,9 +220,11 @@ class _FeedsPageState extends State<FeedsPage> {
     return RefreshIndicator(
       onRefresh: _getData,
       child: ListView.builder(
-        shrinkWrap: true,
+        physics: AlwaysScrollableScrollPhysics(),
+
+        shrinkWrap: false,
         padding: const EdgeInsets.all(8.0),
-        itemCount: _feeds.data.length + 1,
+        itemCount: _feeds.data.length,
         controller: _scrollController,
         itemBuilder: (BuildContext context, int index) {
           if (index == _feeds.data.length) {

@@ -104,6 +104,107 @@ class _FeedPageState extends State<FeedPage> {
 
   }
 
+  Widget _buildMainContents(){
+    return Column(
+      children: <Widget>[
+        Container(
+          alignment: Alignment.centerLeft,
+          margin: EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
+          padding: EdgeInsets.only(
+              left: 10, right: 10, top: 10, bottom: 10),
+          child: Text(feed.content,
+            style: TextStyle(color: Colors.white, fontSize: 16),),
+        ),
+        Row(
+
+          children: <Widget>[
+            Container(
+              padding: EdgeInsets.only(left: 15.0, bottom: 10, top: 3),
+              child: Icon(
+                Icons.question_answer, color: Colors.white, size: 15,
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.only(left: 15.0, bottom: 10, top: 3),
+              child: Text(feed.replies.length.toString(),
+                style: TextStyle(color: Colors.white),),
+            ),
+            Expanded(
+              flex: 0,
+              child: Padding(
+                  padding: EdgeInsets.only(left: 15.0, bottom: 10, top: 3),
+                  child: Text(feed.isAdmin ? "관리자" : feed.userId,
+                      style: TextStyle(color: Colors.grey))),
+            ),
+            Expanded(
+              flex: 0,
+              child: Padding(
+                  padding: EdgeInsets.only(left: 5.0, bottom: 8, top: 3),
+                  child: Text(
+                      DateTimeUtils.utcStringToLocalString(feed.created),
+                      style: TextStyle(color: Colors.grey))),
+            )
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildReplies(){
+    return Expanded(
+        flex: 1,
+        child: RefreshIndicator(
+          onRefresh: _getData,
+          child: ListView.builder(
+            scrollDirection: Axis.vertical,
+            padding: const EdgeInsets.all(8.0),
+            physics: AlwaysScrollableScrollPhysics(),
+            shrinkWrap: false,
+            itemCount: feed.replies.length,
+            itemBuilder: (BuildContext context, int index) {
+              return makeContents(index);
+            },),
+        ));
+  }
+
+  @override
+  void setState(fn) {
+    if(mounted){
+      super.setState(fn);
+    }
+  }
+
+  ListTile makeContents(index) =>
+      ListTile(
+        dense: true,
+        contentPadding: EdgeInsets.only(left: 15, right: 16),
+        title: Text(
+          feed.replies[index].content,
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
+
+        subtitle: Row(
+          children: <Widget>[
+            Expanded(
+              flex: 0,
+              child: Padding(
+                  padding: EdgeInsets.only(left: 0.0, bottom: 0, top: 3),
+                  child: Text(feed.replies[index].userId,
+                      style: TextStyle(color: Colors.grey))),
+            ),
+            Expanded(
+              flex: 0,
+              child: Padding(
+                  padding: EdgeInsets.only(left: 5.0, bottom: 0, top: 3),
+                  child: Text(DateTimeUtils.utcStringToLocalString(
+                      feed.replies[index].created),
+                      style: TextStyle(color: Colors.grey))),
+            )
+          ],
+        ),
+      );
+
+
   @override
   Widget build(BuildContext context) {
     if(feed == null){
@@ -112,103 +213,16 @@ class _FeedPageState extends State<FeedPage> {
           child: Center(child: CircularProgressIndicator()));
     }
 
-    ListTile makeContents(index) =>
-        ListTile(
-          dense: true,
-          contentPadding: EdgeInsets.only(left: 15, right: 16),
-          title: Text(
-            feed.replies[index].content,
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-          ),
-
-          subtitle: Row(
-            children: <Widget>[
-              Expanded(
-                flex: 0,
-                child: Padding(
-                    padding: EdgeInsets.only(left: 0.0, bottom: 0, top: 3),
-                    child: Text(feed.replies[index].userId,
-                        style: TextStyle(color: Colors.grey))),
-              ),
-              Expanded(
-                flex: 0,
-                child: Padding(
-                    padding: EdgeInsets.only(left: 5.0, bottom: 0, top: 3),
-                    child: Text(DateTimeUtils.utcStringToLocalString(
-                        feed.replies[index].created),
-                        style: TextStyle(color: Colors.grey))),
-              )
-            ],
-          ),
-        );
-
     final makeBody = Column(
       children: [
-
-        Column(
-          children: <Widget>[
-            Container(
-              alignment: Alignment.centerLeft,
-              margin: EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
-              padding: EdgeInsets.only(
-                  left: 10, right: 10, top: 10, bottom: 10),
-              child: Text(feed.content,
-                style: TextStyle(color: Colors.white, fontSize: 16),),
-            ),
-            Row(
-
-              children: <Widget>[
-                Container(
-                  padding: EdgeInsets.only(left: 15.0, bottom: 10, top: 3),
-                  child: Icon(
-                    Icons.question_answer, color: Colors.white, size: 15,
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.only(left: 15.0, bottom: 10, top: 3),
-                  child: Text(feed.replies.length.toString(),
-                    style: TextStyle(color: Colors.white),),
-                ),
-                Expanded(
-                  flex: 0,
-                  child: Padding(
-                      padding: EdgeInsets.only(left: 15.0, bottom: 10, top: 3),
-                      child: Text(feed.isAdmin ? "관리자" : feed.userId,
-                          style: TextStyle(color: Colors.grey))),
-                ),
-                Expanded(
-                  flex: 0,
-                  child: Padding(
-                      padding: EdgeInsets.only(left: 5.0, bottom: 8, top: 3),
-                      child: Text(
-                          DateTimeUtils.utcStringToLocalString(feed.created),
-                          style: TextStyle(color: Colors.grey))),
-                )
-              ],
-            ),
-          ],
-        ),
+        _buildMainContents(),
         Container(
           height: 4,
           color: Colors.white10,
         ),
-        Expanded(
-          flex: 1,
-            child: RefreshIndicator(
-              onRefresh: _getData,
-              child: ListView.builder(
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,
-                itemCount: feed.replies.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return makeContents(index);
-                },),
-            )),
-
+        _buildReplies(),
         _buildTextComposer()
       ],
-
-
     );
 
     final topAppBar = AppBar(
@@ -225,8 +239,9 @@ class _FeedPageState extends State<FeedPage> {
   }
 
   Future<void> _getData() async {
+    var result = await feedService.getFeed(feed.id);
     setState(() {
-      fetchReplies();
+      feed = result;
     });
   }
 
