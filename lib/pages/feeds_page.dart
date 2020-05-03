@@ -166,7 +166,8 @@ class _FeedsPageState extends State<FeedsPage> {
           ), // icon
           Text(
             feed.replyCount.toString(),
-            style: TextStyle(color: Colors.white),
+
+            style: TextStyle(color: Colors.white, fontFamily: 'Roboto'),
           ), // text
         ],
       ),
@@ -240,7 +241,7 @@ class _FeedsPageState extends State<FeedsPage> {
                 ));
           }
 
-          if (index == 3 && Const.NativeAdCount == 0) {
+          /*if (index == 3 && Const.NativeAdCount == 0) {
             Const.NativeAdCount++;
 
             return Column(
@@ -263,7 +264,7 @@ class _FeedsPageState extends State<FeedsPage> {
                 ),
               ],
             );
-          }
+          }*/
           return makeCard(_feeds.data[index]);
         },
       ),

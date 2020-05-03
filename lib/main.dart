@@ -1,6 +1,7 @@
 import 'package:c_lecture/providers/lecture_provier.dart';
 import 'package:c_lecture/screen/login_screen.dart';
 import 'package:c_lecture/screen/splash_screen.dart';
+import 'package:c_lecture/util/MyBehavior.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -26,8 +27,15 @@ class MyApp extends StatelessWidget {
 
       theme: ThemeData(
         primarySwatch: Colors.blueGrey,
+        fontFamily: 'NotoSans'
       ),
       home: SplashScreen(),
+      builder: (context, child) {
+        return ScrollConfiguration(
+          behavior: MyBehavior(),
+          child: child,
+        );
+      },
       routes: <String, WidgetBuilder>{
         '/TabScreen': (BuildContext context) => new TabScreen(),
       },

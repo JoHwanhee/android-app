@@ -23,7 +23,7 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
-  flutter_markdown: ^0.3.3
+  flutter_markdown: ^0.3.5
   http: ^0.12.0+4
   test: any
   provider: ^4.0.2
@@ -38,7 +38,7 @@ dependencies:
   intl: ^0.16.1
   auto_size_text: ^2.1.0
   firebase_messaging: 6.0.9
-
+  path_provider: ^1.6.7
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -55,6 +55,18 @@ flutter:
     - assets/images/
     - assets/design_course/
   fonts:
+    - family: NotoSans
+      fonts:
+        - asset: assets/fonts/NotoSansKR-Thin.otf
+          weight: 100
+        - asset: assets/fonts/NotoSansKR-Light.otf
+          weight: 200
+        - asset: assets/fonts/NotoSansKR-Black.otf
+        - asset: assets/fonts/NotoSansKR-Regular.otf
+        - asset: assets/fonts/NotoSansKR-Medium.otf
+          weight: 400
+        - asset: assets/fonts/NotoSansKR-Bold.otf
+          weight: 700
     - family: WorkSans
       fonts:
       - asset: assets/fonts/WorkSans-Regular.ttf

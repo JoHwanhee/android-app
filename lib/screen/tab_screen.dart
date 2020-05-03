@@ -160,8 +160,8 @@ class _TabScreenState extends State<TabScreen> {
               physics: NeverScrollableScrollPhysics(),
               controller: _controller,
               children: <Widget>[
-                ListPage(title: 'C Language'),
-                FeedsPage(title: 'Feeds'),
+                ListPage(title: '강좌'),
+                FeedsPage(title: '담벼락'),
                 SettingPage(title: 'Settings'),
               ],
             ),
@@ -171,15 +171,15 @@ class _TabScreenState extends State<TabScreen> {
             items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(
                 icon: Icon(Icons.school),
-                title: Text('Lecture'),
+                title: Text('강좌'),
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.question_answer),
-                title: Text('Feeds'),
+                title: Text('담벼락'),
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.exit_to_app),
-                title: Text('Exit'),
+                title: Text('나가기'),
               ),
             ],
             currentIndex: _page,

@@ -53,7 +53,7 @@ class _FeedPageState extends State<FeedPage> {
 
   Widget _buildTextField(){
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 8.0),
+      margin: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 10.0),
       child: TextField(
         controller: _textController,
         keyboardType: TextInputType.multiline,
@@ -62,8 +62,9 @@ class _FeedPageState extends State<FeedPage> {
         cursorColor: Colors.white,
 
         style: new TextStyle(color: Colors.white),
-        decoration: new InputDecoration.collapsed(hintText: "Write a message",
-          hintStyle: TextStyle(fontSize: 14.0, color: Colors.blueGrey),
+        decoration: new InputDecoration.collapsed(hintText: "댓글쓰기",
+
+          hintStyle: TextStyle(fontSize: 14.0, color: Colors.grey),
 
         ),
       ),
@@ -72,13 +73,18 @@ class _FeedPageState extends State<FeedPage> {
 
 
   Widget _buildTextComposer() {
-    return Row(children: <Widget>[
-      Flexible(child: _buildTextField()),
-      Container(
-        margin: const EdgeInsets.symmetric(horizontal: 4.0),
-        child: IconButton(icon: Icon(Icons.send, color: Colors.white,),
-            onPressed: () => _handleSubmitted(_textController.text)),),
-      ]);
+    return Column(
+      children: <Widget>[
+        Container(color: Colors.white10, height: 1,),
+        Row(children: <Widget>[
+          Flexible(child: _buildTextField()),
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 0.0),
+            child: IconButton(icon: Icon(Icons.send, color: Colors.white,),
+                onPressed: () => _handleSubmitted(_textController.text)),),
+          ]),
+      ],
+    );
   }
 
 
@@ -116,7 +122,6 @@ class _FeedPageState extends State<FeedPage> {
             style: TextStyle(color: Colors.white, fontSize: 16),),
         ),
         Row(
-
           children: <Widget>[
             Container(
               padding: EdgeInsets.only(left: 15.0, bottom: 10, top: 3),
@@ -160,8 +165,26 @@ class _FeedPageState extends State<FeedPage> {
             padding: const EdgeInsets.all(8.0),
             physics: AlwaysScrollableScrollPhysics(),
             shrinkWrap: false,
-            itemCount: feed.replies.length,
+            itemCount: feed.replies.length + 1,
             itemBuilder: (BuildContext context, int index) {
+              if(index == 0){
+                return Column(
+                  children: <Widget>[
+                    _buildMainContents(),
+                    Container(
+                      height: 2,
+                      color: Colors.white10,
+                    ),
+                    feed.replies.length != 0 ? makeContents(index) : Container()
+                  ],
+
+                );
+              }
+
+              if(index >= feed.replies.length){
+                return Container();
+              }
+
               return makeContents(index);
             },),
         ));
@@ -215,11 +238,6 @@ class _FeedPageState extends State<FeedPage> {
 
     final makeBody = Column(
       children: [
-        _buildMainContents(),
-        Container(
-          height: 4,
-          color: Colors.white10,
-        ),
         _buildReplies(),
         _buildTextComposer()
       ],

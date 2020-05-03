@@ -1,8 +1,10 @@
 import 'package:c_lecture/const.dart';
 import 'package:c_lecture/model/lectures.dart';
 import 'package:c_lecture/services/lecture_serivce.dart';
+import 'package:c_lecture/util/syntax_highlighter.dart';
 import 'package:facebook_audience_network/facebook_audience_network.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 
 class DetailPage extends StatefulWidget {
@@ -68,10 +70,19 @@ class _DetailPageState extends State<DetailPage> {
     return Scaffold(
       appBar: topAppBar,
       body: Container(
+        padding: EdgeInsets.all(10),
           child: Markdown(
               controller: _scr,
+
               data: _markdownData,
               imageDirectory: Const.ImageServerDirectory,
+              styleSheet:
+              MarkdownStyleSheet.fromTheme(Theme.of(context)).copyWith(
+                blockquotePadding: EdgeInsets.only(top: 10, bottom: 10),
+                p: TextStyle(fontSize: 13, color: Colors.black, wordSpacing: 3, fontFamily: 'NotoSans'),
+                blockSpacing: 20,
+
+              ),
           )),
 
     );
