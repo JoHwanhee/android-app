@@ -24,7 +24,7 @@ class _DetailPageState extends State<DetailPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    if(Const.AdCount < 1){
+    /*if(Const.AdCount < 1){
       FacebookInterstitialAd.loadInterstitialAd(
         placementId: "610582579805224_610601026470046",
         listener: (result, value) {
@@ -41,7 +41,7 @@ class _DetailPageState extends State<DetailPage> {
     }
     else{
       Const.AdCount ++;
-    }
+    }*/
 
     _lectureService.getContents(widget.lecture).then((res) {
       setState(() {
@@ -79,9 +79,12 @@ class _DetailPageState extends State<DetailPage> {
               styleSheet:
               MarkdownStyleSheet.fromTheme(Theme.of(context)).copyWith(
                 blockquotePadding: EdgeInsets.only(top: 10, bottom: 10),
-                p: TextStyle(fontSize: 13, color: Colors.black, wordSpacing: 3, fontFamily: 'NotoSans'),
-                blockSpacing: 20,
-                listIndent: 10,
+                h2: TextStyle(fontSize: 20, color: Colors.black, wordSpacing: 2, fontFamily: 'NotoSans', fontWeight: FontWeight.w700),
+                h3: TextStyle(fontSize: 16, color: Colors.black, wordSpacing: 2, fontFamily: 'NotoSans', fontWeight: FontWeight.w500),
+                h4: TextStyle(fontSize: 14, color: Colors.black, wordSpacing: 2, fontFamily: 'NotoSans', fontWeight: FontWeight.w500),
+                p: TextStyle(fontSize: 12, color: Colors.black, wordSpacing: 2, fontFamily: 'NotoSans'),
+                blockSpacing: 25,
+                listIndent: 20,
 
 
 
