@@ -225,7 +225,7 @@ class _FeedsPageState extends State<FeedsPage> {
 
         shrinkWrap: false,
         padding: const EdgeInsets.all(8.0),
-        itemCount: _feeds.data.length,
+        itemCount: _feeds.data.length + 1,
         controller: _scrollController,
         itemBuilder: (BuildContext context, int index) {
           if (index == _feeds.data.length) {

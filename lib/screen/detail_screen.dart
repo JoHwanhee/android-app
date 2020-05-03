@@ -24,7 +24,7 @@ class _DetailPageState extends State<DetailPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    /*if(Const.AdCount < 1){
+    if(Const.AdCount < 1){
       FacebookInterstitialAd.loadInterstitialAd(
         placementId: "610582579805224_610601026470046",
         listener: (result, value) {
@@ -41,7 +41,7 @@ class _DetailPageState extends State<DetailPage> {
     }
     else{
       Const.AdCount ++;
-    }*/
+    }
 
     _lectureService.getContents(widget.lecture).then((res) {
       setState(() {
@@ -73,7 +73,6 @@ class _DetailPageState extends State<DetailPage> {
         padding: EdgeInsets.all(10),
           child: Markdown(
               controller: _scr,
-
               data: _markdownData,
               imageDirectory: Const.ImageServerDirectory,
               styleSheet:
@@ -85,9 +84,6 @@ class _DetailPageState extends State<DetailPage> {
                 p: TextStyle(fontSize: 12, color: Colors.black, wordSpacing: 2, fontFamily: 'NotoSans'),
                 blockSpacing: 20,
                 listIndent: 20,
-
-
-
               ),
           )),
 
