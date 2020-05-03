@@ -81,6 +81,9 @@ class _DetailPageState extends State<DetailPage> {
                 blockquotePadding: EdgeInsets.only(top: 10, bottom: 10),
                 p: TextStyle(fontSize: 13, color: Colors.black, wordSpacing: 3, fontFamily: 'NotoSans'),
                 blockSpacing: 20,
+                listIndent: 10,
+
+
 
               ),
           )),
