@@ -80,10 +80,10 @@ class _DetailPageState extends State<DetailPage> {
               MarkdownStyleSheet.fromTheme(Theme.of(context)).copyWith(
                 blockquotePadding: EdgeInsets.only(top: 10, bottom: 10),
                 h2: TextStyle(fontSize: 20, color: Colors.black, wordSpacing: 2, fontFamily: 'NotoSans', fontWeight: FontWeight.w700),
-                h3: TextStyle(fontSize: 16, color: Colors.black, wordSpacing: 2, fontFamily: 'NotoSans', fontWeight: FontWeight.w500),
+                h3: TextStyle(fontSize: 16, color: Colors.black, wordSpacing: 2, fontFamily: 'NotoSans', fontWeight: FontWeight.w700),
                 h4: TextStyle(fontSize: 14, color: Colors.black, wordSpacing: 2, fontFamily: 'NotoSans', fontWeight: FontWeight.w500),
                 p: TextStyle(fontSize: 12, color: Colors.black, wordSpacing: 2, fontFamily: 'NotoSans'),
-                blockSpacing: 25,
+                blockSpacing: 20,
                 listIndent: 20,
 
 
