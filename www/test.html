@@ -6,17 +6,19 @@ function logEvent(name, params) {
     return;
   }
 
-  if (window.WebViewInterface) {
-    window.WebViewInterface.logEvent(name, JSON.stringify(params));
-  } else if (window.webkit
-      && window.webkit.messageHandlers
-      && window.webkit.messageHandlers.jsHandler) {
-    // Call iOS interface
-    var message = {
+  var message = {
       command: 'logEvent',
       name: name,
       parameters: params
     };
+  
+  if (window.WebViewInterface) {
+    window.WebViewInterface.logEvent(name, JSON.stringify(message));
+  } else if (window.webkit
+      && window.webkit.messageHandlers
+      && window.webkit.messageHandlers.jsHandler) {
+    // Call iOS interface
+    
     window.webkit.messageHandlers.jsHandler.postMessage(message);
   } else {
     // No Android or iOS interface found
