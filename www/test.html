@@ -1,6 +1,7 @@
-<script type="text/javascript">	
-  function webClose() { window.MyScript.webViewClose(); } 
-</script>
+  <input type="button" value="Say hello" onClick="onAppClose()" />
 
-
-<button onclick="webClose();">종료</button>
+    <script type="text/javascript">	
+        function onAppClose() {	
+            App.onAppClose();	
+        }	
+    </script>
