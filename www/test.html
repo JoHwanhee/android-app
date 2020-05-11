@@ -1,7 +1,7 @@
-    <input type="button" value="Say hello" onClick="showAndroidToast('Hello Android!')" />
+    <input type="button" value="Say hello" onClick="onAppClose()" />
 
     <script type="text/javascript">
-        function showAndroidToast(toast) {
-            Android.showToast(toast);
+        function onAppClose() {
+            Android.onAppClose();
         }
     </script>
