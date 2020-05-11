@@ -1,29 +1,36 @@
-<input type="button" value="Say hello" onClick="mobileEvent('onClosed', 'The hiworks password changed.')" />
+<input type="button" value="Say hello" onClick="onClosed()" />
 
 <script type="text/javascript">	
-  
-function mobileEvent(name, params) {
-  if (!name) {
-    return;
-  }
 
-  var message = {
+function mobileEvent(command, name, data) {
+  if (!command) return;
+  if (!name) return;
+  if (!data) return;
+
+  let message = {
+      command: command,
       name: name,
-      parameters: params
+      data: data
   };
 
-  if (window.WebViewInterface) {
-    window.WebViewInterface.logEvent(name, JSON.stringify(message));
-  } else if (window.webkit
+  let isAndroid = window.WebViewInterface;
+  let isIos = window.webkit
       && window.webkit.messageHandlers
-      && window.webkit.messageHandlers.jsHandler) {
-    // Call iOS interface
-
+      && window.webkit.messageHandlers.jsHandler; 
+  
+  if (isAndroid) {
+    window.WebViewInterface.logEvent(name, JSON.stringify(message));
+  } 
+  else if (isIos) {
     window.webkit.messageHandlers.jsHandler.postMessage(message);
-  } else {
-    // No Android or iOS interface found
+  } 
+  else {
     console.log("No native APIs found.");
   }
+}
+  
+function onClosed(){
+  mobileEvent('closeCommand', 'passwordChanged', 'The hiworks password changed.')
 }
   
 </script>
