@@ -13,15 +13,15 @@ function fireMobileEvent(command, name, data) {
       data: data
   };
 
-  let isAndroid = window.WebViewInterface;
-  let isIos = window.webkit
+  let hasAndroidHandler = window.WebViewInterface;
+  let hasIosHandler = window.webkit
       && window.webkit.messageHandlers
       && window.webkit.messageHandlers.jsHandler; 
   
-  if (isAndroid) {
+  if (hasAndroidHandler) {
     window.WebViewInterface.logEvent(name, JSON.stringify(message));
   } 
-  else if (isIos) {
+  else if (hasIosHandler) {
     window.webkit.messageHandlers.jsHandler.postMessage(message);
   } 
   else {
