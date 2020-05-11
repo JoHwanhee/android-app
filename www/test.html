@@ -1,14 +1,13 @@
   <input type="button" value="Say hello" onClick="logEvent('test', 'test')" />
 
 <script type="text/javascript">	
-        function logEvent(name, params) {
+function logEvent(name, params) {
   if (!name) {
     return;
   }
 
-  if (window.AnalyticsWebInterface) {
-    // Call Android interface
-    window.AnalyticsWebInterface.logEvent(name, JSON.stringify(params));
+  if (window.WebViewInterface) {
+    window.WebViewInterface.logEvent(name, JSON.stringify(params));
   } else if (window.webkit
       && window.webkit.messageHandlers
       && window.webkit.messageHandlers.firebase) {
@@ -24,28 +23,6 @@
     console.log("No native APIs found.");
   }
 }
-function setUserProperty(name, value) {
-  if (!name || !value) {
-    return;
-  }
 
-  if (window.AnalyticsWebInterface) {
-    // Call Android interface
-    window.AnalyticsWebInterface.setUserProperty(name, value);
-  } else if (window.webkit
-      && window.webkit.messageHandlers
-      && window.webkit.messageHandlers.firebase) {
-    // Call iOS interface
-    var message = {
-      command: 'setUserProperty',
-      name: name,
-      value: value
-   };
-    window.webkit.messageHandlers.firebase.postMessage(message);
-  } else {
-    // No Android or iOS interface found
-    console.log("No native APIs found.");
-  }
-}
 
 </script>
