@@ -98,6 +98,13 @@
 			"imagePath" : "/images/1.jpg",
 			"level" : "beginner",
 			"indicatorValue" : 30.0
+		},
+		{
+			"title" : "[자료구조] 1. 링크드 리스트",
+			"path" : "/structure/1.md",
+			"imagePath" : "/images/1.jpg",
+			"level" : "normal",
+			"indicatorValue" : 30.0
 		}
 	]
 }
