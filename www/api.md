@@ -1,5 +1,5 @@
 
-기본 url : https://api.mohagae.ga/api/v1  
+기본 url : https://mohagae.ga/api/v1  
 임시 url : http://mohagae.ga/api/v1
 
 200	클라이언트의 요청을 정상적으로 수행함 (GET, PUT, PATCH or DELETE.)
