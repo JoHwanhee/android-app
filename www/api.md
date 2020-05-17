@@ -2,7 +2,7 @@
 기본 url : https://api.mohagae.ga/api/v1  
 임시 url : http://34.64.249.139/api/v1
 
-200	클라이언트의 요청을 정상적으로 수행함
+200	클라이언트의 요청을 정상적으로 수행함 (GET, PUT, PATCH or DELETE.)
 ```json
 {
   "code" : "N0000",
@@ -11,11 +11,11 @@
 }
 ```
 
-201	클라이언트가 어떠한 리소스 생성을 요청, 해당 리소스가 성공적으로 생성됨(POST, PUT, PATCH)
+201	클라이언트가 어떠한 리소스 생성을 요청, 해당 리소스가 성공적으로 생성됨(POST)
 ```json
 {
   "code" : "N0000",
-  "message" : "created" or "modified"
+  "message" : "created" 
   "data" : [] or {}
 }
 ```
