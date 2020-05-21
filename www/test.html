@@ -2,9 +2,7 @@
 
 <script type="text/javascript">	
 
-function fireMobileEvent(command, name, data) {
-  window.location.href = "yourapp://buttonClicked";
-  
+function fireMobileEvent(command, name, data) {  
   if (!command) return;
   if (!name) return;
   if (!data) return;
@@ -27,7 +25,7 @@ function fireMobileEvent(command, name, data) {
     window.webkit.messageHandlers.jsHandler.postMessage(message);
   } 
   else {
-    console.log("No native APIs found.");
+    window.location.href = "yourapp://buttonClicked";
   }
 }
   
