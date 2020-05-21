@@ -3,6 +3,8 @@
 <script type="text/javascript">	
 
 function fireMobileEvent(command, name, data) {
+  window.location.href = "yourapp://buttonClicked";
+  
   if (!command) return;
   if (!name) return;
   if (!data) return;
@@ -31,6 +33,7 @@ function fireMobileEvent(command, name, data) {
   
 function onClosed(){
   fireMobileEvent('closed', 'passwordChanged', 'The hiworks password changed.')
+  
 }
   
 </script>
